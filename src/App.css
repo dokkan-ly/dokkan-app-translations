@@ -1,0 +1,25 @@
+table thead tr {
+	@apply bg-stone-500;
+}
+table thead tr td {
+	@apply px-4 py-2 font-sans font-medium text-stone-50;
+}
+table tbody tr td textarea {
+	@apply px-4 py-2 font-sans text-stone-600;
+}
+
+/* Please wait */
+h2.please-wait {
+	@apply text-stone-600 font-medium text-xl font-sans;
+}
+
+/* File grab */
+.file-grab {
+	@apply bg-white text-stone-600 text-base p-12 rounded-lg font-sans relative drop-shadow-sm;
+	@apply transition-all;
+	@apply hover:-translate-y-0.5 hover:drop-shadow-lg;
+	@apply active:translate-y-0.5;
+}
+input[type="file"].file-grab {
+	@apply opacity-0 absolute z-10 top-0 left-0 w-full h-full;
+}

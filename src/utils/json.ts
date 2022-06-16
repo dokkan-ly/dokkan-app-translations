@@ -1,29 +1,16 @@
-function _assignKeyPathsToObject(paths: string[], obj: any, value: any = null) {
-	const [current, ...remaining] = paths;
-	if (remaining.length === 0) {
-		obj[current] = value;
-		return;
-	}
-	obj[current] = {};
-	_assignKeyPathsToObject(remaining, obj[current], value);
-}
+import { setProperty } from "dot-prop";
 
 export function convertTranslationTableToLocalesObject(table: string[][]) {
-	const result: any = {};
-	const [[_, ...locales], ...body] = table;
+	const [head, ...body] = table;
+	const [_, ...locales] = head;
 
-	const keys = body.map((row) => row[0]);
-	const keyPaths = keys.map((key) => key.split("."));
-
-	locales.forEach((locale, j) => {
-		const translations = {};
-
-		keyPaths.forEach((paths, i) => {
-			const value = body[i][j];
-			_assignKeyPathsToObject(paths, translations, value);
+	const result = {};
+	locales.forEach((locale, i) => {
+		body.forEach((row) => {
+			const [path, ...values] = row;
+			const value = values[i];
+			setProperty(result, `${locale}.${path}`, value);
 		});
-
-		result[locale] = translations;
 	});
 
 	return result;
